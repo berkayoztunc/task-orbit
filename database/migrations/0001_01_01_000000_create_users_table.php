@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('github_username')->nullable();
             $table->string('github_token')->nullable();
             $table->string('github_avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
 
