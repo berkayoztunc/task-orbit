@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('github_username')->nullable();
             $table->string('github_token')->nullable();
             $table->string('github_avatar')->nullable();
+            $table->integer('current_profile_id')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

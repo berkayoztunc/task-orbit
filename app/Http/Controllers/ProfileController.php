@@ -22,7 +22,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|integer',
-            'comany_id' => 'required|integer',
+            'company_id' => 'required|integer',
             'role_id' => 'required|integer',
         ]);
 
