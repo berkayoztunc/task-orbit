@@ -28,19 +28,23 @@ Route::get('/', function () {
 
 // ... diğer rotalar
 
-Route::get('/admin/login', function () {
+Route::get('/admin', function () {
     return view('admin-login');
 })->name('admin.login');
 
+// Login
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
 
 
 
-
-
+/*
 
 Route::get('/admin-login', function () {
     return view('login');
 });
+*/
 
 // 2. Admin Ana Paneli / Dashboard (admin.blade.php)
 // "Hoşgeldiniz Admin" yazan sayfa

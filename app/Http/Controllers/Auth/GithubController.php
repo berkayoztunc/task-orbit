@@ -34,6 +34,6 @@ class GithubController extends Controller
             );
 
             Auth::login($user);
-            return redirect('/');
+            return redirect('/dashboard');
         }
 }

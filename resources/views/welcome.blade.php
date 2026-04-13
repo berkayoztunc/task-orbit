@@ -35,9 +35,8 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <a href="#login" class="text-slate-400 hover:text-slate-50 font-bold text-sm transition-colors">Giriş Yap</a>
                     <a href="/login" class="bg-blue-600 text-white hover:bg-blue-500 rounded-full px-8 py-2.5 font-bold text-sm shadow-xl shadow-blue-600/20 transition-all active:scale-95">
-                        Kayıt Ol
+                        Giriş Yap
                     </a>
                 </div>
             </div>
