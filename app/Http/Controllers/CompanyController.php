@@ -19,36 +19,30 @@ class CompanyController extends Controller
         return response()->json($company, 201);
     }
 
-    public function show($id)
+    public function show(Company $company)
     {
-        $company = Company::findOrFail($id);
         return response()->json($company);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
-        $company = Company::findOrFail($id);
         $company->update($request->only('title'));
         return response()->json($company);
     }
 
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        $company = Company::findOrFail($id);
         $company->delete();
         return response()->json(null, 204);
     }
 
-    public function profiles($id)
+    public function profiles(Company $company)
     {
-        $company = Company::findOrFail($id);
         return response()->json($company->profiles);
     }
 
-    public function internships($id)
+    public function internships(Company $company)
     {
-        $company = Company::findOrFail($id);
         return response()->json($company->internships);
     }
-    
 }
