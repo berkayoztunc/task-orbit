@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     return view('login');
-})->name('user.login');
+})->name('login');
 // ... diğer rotalar
 
 Route::get('/admin/login', function () {
