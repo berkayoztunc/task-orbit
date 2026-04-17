@@ -6,20 +6,15 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-<<<<<<< HEAD
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskSubmissionController;
-=======
-use App\Models\Role;
->>>>>>> 905f15b77c4e9f94e280d6213e1af25186731b19
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
 
 Route::get('/test', function () {
     return [
@@ -27,20 +22,18 @@ Route::get('/test', function () {
     ];
 });
 
-//companies
+// Companies
 Route::apiResource('companies', CompanyController::class);
 
-//profiles
+// Profiles
 Route::apiResource('profiles', ProfileController::class);
-//roles
-Route::get('roles', [RoleController::class, 'index']);
-Route::get('roles/{role}', [RoleController::class, 'show']);
-//internships
+
+// Internships
 Route::apiResource('internships', InternshipController::class);
 Route::get('companies/{id}/profiles', [CompanyController::class, 'profiles']);
 Route::get('companies/{id}/internships', [CompanyController::class, 'internships']);
 
-// Roller - index/show
+// Roles
 Route::get('roles', [RoleController::class, 'index']);
 Route::get('roles/{role}', [RoleController::class, 'show']);
 
@@ -62,3 +55,7 @@ Route::patch('task-submissions/{taskSubmission}', [TaskSubmissionController::cla
 Route::get('media', [MediaController::class, 'index']);
 Route::post('media', [MediaController::class, 'store']);
 Route::delete('media/{media}', [MediaController::class, 'destroy']);
+
+// Images
+Route::post('images', [ImageController::class, 'store']);
+Route::delete('images/{image}', [ImageController::class, 'destroy']);
