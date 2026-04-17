@@ -10,8 +10,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MediaController;
-use App\Controllers\TaskController;
-use App\Controllers\TaskSubmissionController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskSubmissionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
