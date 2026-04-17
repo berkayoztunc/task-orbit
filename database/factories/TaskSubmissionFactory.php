@@ -18,7 +18,11 @@ class TaskSubmissionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'intern_register_id' => \App\Models\InternRegister::factory(),
+            'task_id' => \App\Models\Task::factory(),
+            'submissions' => fake()->url(), 
+            'point' => fake()->numberBetween(0, 100),
+            'status' => fake()->boolean(),
         ];
     }
 }

@@ -18,7 +18,9 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+        'lesson_id' => \App\Models\Lesson::factory(),
+        'title' => fake()->word(),
+        'description' => fake()->text(),
         ];
     }
 }
