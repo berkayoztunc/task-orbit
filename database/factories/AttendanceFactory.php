@@ -18,7 +18,9 @@ class AttendanceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'intern_register_id' => \App\Models\InternRegister::factory(),
+            'lesson_id' => \App\Models\Lesson::factory(),
+            'status' => fake()->boolean(),
         ];
     }
 }

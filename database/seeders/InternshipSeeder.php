@@ -9,6 +9,12 @@ class InternshipSeeder extends Seeder
 {
     public function run(): void
     {
-        Internship::factory(10)->create();
+       
+    $companies = \App\Models\Company::all();
+    foreach ($companies as $company) {
+        \App\Models\Internship::factory(2)->create([
+            'company_id' => $company->id
+        ]);
+    }
     }
 }

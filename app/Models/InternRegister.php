@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InternRegister extends Model
 {
+    use HasFactory;
+    public $timestamps = false;
     protected $fillable = ['profile_id', 'internship_id', 'status', 'message'];
 
     public function task_submissions()

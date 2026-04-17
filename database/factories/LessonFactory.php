@@ -10,15 +10,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LessonFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            //
-        ];
-    }
+public function definition(): array
+{
+    return [
+        'title' => fake()->sentence(3),
+        'internship_id' => \App\Models\Internship::factory(),
+        'start_date' => fake()->dateTimeBetween('now', '+1 week'),
+        'end_date' => fake()->dateTimeBetween('+1 week', '+2 weeks'),
+        'description' => fake()->text(),
+        'content' => fake()->paragraph(),
+        'profile_id' => \App\Models\Profile::factory(), 
+    ];
+}
 }

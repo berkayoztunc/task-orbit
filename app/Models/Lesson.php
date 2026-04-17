@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
     protected $fillable = ['title', 'internship_id', 'start_date', 'end_date', 'description', 'content', 'profile_id'];
-
+    use HasFactory;
+    public $timestamps = false;
     public function tasks()
     {
         return $this->hasMany(Task::class);

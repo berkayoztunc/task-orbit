@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskSubmission extends Model
 {
+    use HasFactory;
+    public $timestamps = false;
     protected $fillable = ['intern_register_id', 'task_id', 'submissions', 'point', 'status'];
 
     public function intern_register()
