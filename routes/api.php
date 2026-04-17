@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\InternRegisterController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskSubmissionController;
@@ -32,6 +34,14 @@ Route::apiResource('profiles', ProfileController::class);
 Route::apiResource('internships', InternshipController::class);
 Route::get('companies/{id}/profiles', [CompanyController::class, 'profiles']);
 Route::get('companies/{id}/internships', [CompanyController::class, 'internships']);
+
+//Intern Registers
+Route::apiResource('intern-registers', InternRegisterController::class);
+Route::get('internships/{internship}/intern-registers', [InternRegisterController::class, 'indexByInternship']);
+
+// Lessons
+Route::apiResource('lessons', LessonController::class);
+Route::get('internships/{internship}/lessons', [LessonController::class, 'indexByInternship']);
 
 // Roles
 Route::get('roles', [RoleController::class, 'index']);

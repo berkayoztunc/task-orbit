@@ -19,4 +19,9 @@ class Internship extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function internRegisters()
+    {
+        return $this->hasMany(InternRegister::class);
+    }
 }
