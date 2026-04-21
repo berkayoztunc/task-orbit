@@ -13,6 +13,8 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskSubmissionController;
+use App\Http\Controllers\CommandController;
+use App\Http\Controllers\CommantableController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -69,3 +71,11 @@ Route::delete('media/{media}', [MediaController::class, 'destroy']);
 // Images
 Route::post('images', [ImageController::class, 'store']);
 Route::delete('images/{image}', [ImageController::class, 'destroy']);
+
+// Commands
+Route::apiResource('commands', CommandController::class)->except(['update']);
+
+// Commantables
+Route::get('commantables', [CommantableController::class, 'index']);
+Route::post('commantables', [CommantableController::class, 'store']);
+Route::delete('commantables/{commantable}', [CommantableController::class, 'destroy']);
