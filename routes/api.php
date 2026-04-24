@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CommandController;
+use App\Http\Controllers\CommantableController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\InternRegisterController;
@@ -71,6 +73,14 @@ Route::delete('media/{media}', [MediaController::class, 'destroy']);
 // Images
 Route::post('images', [ImageController::class, 'store']);
 Route::delete('images/{image}', [ImageController::class, 'destroy']);
+
+// Commands
+Route::apiResource('commands', CommandController::class)->except(['update']);
+
+// Commantables
+Route::get('commantables', [CommantableController::class, 'index']);
+Route::post('commantables', [CommantableController::class, 'store']);
+Route::delete('commantables/{commantable}', [CommantableController::class, 'destroy']);
 
 // Telegram Webhook
 Route::post('/webhook/telegram', [TelegramWebhookController::class, 'handle']);

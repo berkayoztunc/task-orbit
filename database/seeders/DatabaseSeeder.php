@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             InternshipSeeder::class,
             InternRegisterSeeder::class,
             LessonSeeder::class,
+            TaskSeeder::class,
+            AttendanceSeeder::class,
+            TaskSubmissionSeeder::class,
     ]);
     }
 }
