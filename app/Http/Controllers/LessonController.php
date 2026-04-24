@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Internship;
 use App\Models\Lesson;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -11,6 +13,7 @@ class LessonController extends Controller
     public function index()
     {
         $lessons = Lesson::all();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Lessons retrieved successfully',
@@ -76,6 +79,38 @@ class LessonController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Lesson deleted successfully',
+        ]);
+    }
+
+    public function sendAttendanceCheck(Lesson $lesson): JsonResponse
+    {
+        $internRegisters = $lesson->internship->internRegisters()->with('profile.user')->get();
+
+        $sent = 0;
+
+        foreach ($internRegisters as $register) {
+            $user = $register->profile?->user;
+
+            if (! $user || ! $user->telegram_chat_id) {
+                continue;
+            }
+
+            Attendance::firstOrCreate(
+                ['intern_register_id' => $register->id, 'lesson_id' => $lesson->id],
+                ['status' => null]
+            );
+
+            TelegramWebhookController::sendMessage(
+                $user->telegram_chat_id,
+                "📚 Yoklama\nDers: {$lesson->title}\n\nDerse katılıyor musun?\n\"evet\" veya \"hayır\" yazarak cevapla."
+            );
+
+            $sent++;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "{$sent} stajyere yoklama sorusu gönderildi.",
         ]);
     }
 
