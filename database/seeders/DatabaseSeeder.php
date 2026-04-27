@@ -14,13 +14,26 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
        $this->call([
-            RoleSeeder::class,
-            UserSeeder::class,
-            CompanySeeder::class,
-            ProfileSeeder::class,
-            InternshipSeeder::class,
-            InternRegisterSeeder::class,
-            LessonSeeder::class,
+        // Temel Yapı
+        AdminSeeder::class,
+        RoleSeeder::class,
+        UserSeeder::class,
+        CompanySeeder::class,
+        ProfileSeeder::class,
+        
+        // Operasyonel Yapı
+        InternshipSeeder::class,
+        LessonSeeder::class,
+        TaskSeeder::class,
+        InternRegisterSeeder::class,
+        AttendanceSeeder::class,
+        TaskSubmissionSeeder::class,
+        
+        // Etkileşim ve Medya (En Son)
+        CommandSeeder::class,
+        CommantableSeeder::class,
+        ImageSeeder::class,
+        MediaSeeder::class,
     ]);
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('image_id')->constrained()->onDelete('cascade');
             $table->bigInteger('media_id');
             $table->string('media_type');
+            $table->timestamps();
         });
     }
 

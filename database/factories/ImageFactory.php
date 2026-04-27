@@ -2,20 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Command;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Command>
+ * @extends Factory<Image>
  */
-class CommandFactory extends Factory
+class ImageFactory extends Factory
 {
     public function definition(): array
     {
         return [
+            'path'    => 'images/' . $this->faker->uuid . '.jpg',
             'user_id' => User::factory(),
-            'message' => $this->faker->realTextBetween(70, 150),
         ];
     }
 }

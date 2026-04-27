@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('intern_register_id')->constrained()->onDelete('cascade');
             $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
             $table->boolean('status')->default(false);
+            $table->date('date');
+            $table->timestamps();
         });
     }
 
