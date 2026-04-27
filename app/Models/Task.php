@@ -20,4 +20,8 @@ class Task extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

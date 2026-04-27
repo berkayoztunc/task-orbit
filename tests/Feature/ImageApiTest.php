@@ -12,21 +12,21 @@ class ImageApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_can_upload_an_image()
-    {
-        Storage::fake('public');
-        
-       
-        $user = User::factory()->create();
+   public function test_it_can_upload_an_image()
+{
+    Storage::fake('public');
+    $task = \App\Models\Task::factory()->create();
+    $file = \Illuminate\Http\UploadedFile::fake()->image('test.jpg');
 
-        $payload = [
-            'user_id' => $user->id, 
-            'image'   => UploadedFile::fake()->image('avatar.jpg'),
-            'title'   => 'Stajyer Profil Fotoğrafı'
-        ];
+    $payload = [
+        'image' => $file,
+        'user_id' => 1,
+        'imageable_id' => $task->id,
+        'imageable_type' => get_class($task), 
+    ];
 
-        $response = $this->postJson('/api/images', $payload);
+    $response = $this->postJson('/api/images', $payload);
 
-        $response->assertStatus($response->status() === 201 ? 201 : 200);
-    }
+    $response->assertStatus(201);
+}
 }

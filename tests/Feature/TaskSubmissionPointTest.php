@@ -14,7 +14,6 @@ class TaskSubmissionPointTest extends TestCase
     {
         $submission = TaskSubmission::factory()->create(['point' => 0]);
 
-        // Senin rotalarına göre PATCH /api/task-submissions/{id}
         $response = $this->patchJson("/api/task-submissions/{$submission->id}", [
             'point' => 95
         ]);

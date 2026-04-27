@@ -13,7 +13,7 @@ class TaskApiTest extends TestCase
 
     public function test_it_can_list_tasks()
     {
-        // 3 tane görev oluşturalım
+        
         Task::factory()->count(3)->create();
 
         $response = $this->getJson('/api/tasks');

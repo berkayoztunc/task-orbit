@@ -37,7 +37,7 @@ class ProfileApiTest extends TestCase
 
         $response = $this->postJson('/api/profiles', $payload);
 
-        // Controller 201 dönüyor
+        
         $response->assertStatus(201);
 
         

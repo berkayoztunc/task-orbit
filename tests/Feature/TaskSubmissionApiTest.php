@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\TaskSubmission;
 use App\Models\Task;
-use App\Models\InternRegister; // Model ismini kontrol et, muhtemelen budur
+use App\Models\InternRegister; 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,23 +12,17 @@ class TaskSubmissionApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Listeleme testi - task_id zorunlu görünüyor.
-     */
     public function test_it_can_list_task_submissions()
     {
         $task = Task::factory()->create();
         TaskSubmission::factory()->count(2)->create(['task_id' => $task->id]);
 
-        // URL'ye query parametresi ekliyoruz
         $response = $this->getJson("/api/task-submissions?task_id={$task->id}");
 
         $response->assertStatus(200);
     }
 
-    /**
-     * Kayıt testi - Backend'in beklediği gerçek alan isimleri.
-     */
+    
     public function test_it_can_submit_a_task()
     {
         $task = Task::factory()->create();

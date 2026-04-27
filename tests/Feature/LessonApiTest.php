@@ -18,7 +18,6 @@ class LessonApiTest extends TestCase
      */
     public function test_it_can_list_lessons()
     {
-        // Factory'nin description kullandığından emin olmalısın
         Lesson::factory()->count(3)->create();
 
         $response = $this->getJson('/api/lessons');
@@ -47,7 +46,7 @@ class LessonApiTest extends TestCase
 
         $response = $this->postJson('/api/lessons', $payload);
 
-        // Backend 201 yerine 200 dönüyor, biz de testimizi buna uyumlu hale getiriyoruz
+        
         $response->assertStatus(200) 
                  ->assertJsonPath('data.title', 'Laravel Testing Eğitimi');
 

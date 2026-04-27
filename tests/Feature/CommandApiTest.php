@@ -15,8 +15,6 @@ class CommandApiTest extends TestCase
     {
         $user = User::factory()->create();
         
-        // Factory hatası almamak için manuel create kullanabiliriz 
-        // Eğer factory'i henüz oluşturmadıysan bu yöntem garantidir:
         Command::create([
             'user_id' => $user->id,
             'message' => 'Test mesajı'

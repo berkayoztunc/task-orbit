@@ -9,10 +9,18 @@ use Illuminate\Database\Seeder;
 
 class TaskSubmissionSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $registers = InternRegister::all();
+        // Sadece onaylanmış stajyerleri almak daha güvenli olabilir
+        $registers = InternRegister::all(); 
         $tasks = Task::all();
+
+        if ($tasks->isEmpty()) {
+            return;
+        }
 
         foreach ($registers as $register) {
             TaskSubmission::factory()->create([

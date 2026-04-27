@@ -19,7 +19,7 @@ class ImagePolymorphicTest extends TestCase
         $user = User::factory()->create();
         $task = Task::factory()->create();
 
-        // Bir task için resim oluşturuyoruz
+    
         $image = Image::create([
             'path' => 'tasks/test-task.jpg',
             'user_id' => $user->id,
@@ -39,7 +39,6 @@ class ImagePolymorphicTest extends TestCase
         $user = User::factory()->create();
         $profile = Profile::factory()->create();
 
-        // Bir profil (avatar) için resim oluşturuyoruz
         $image = Image::create([
             'path' => 'avatars/test-profile.jpg',
             'user_id' => $user->id,

@@ -25,14 +25,13 @@ class AttendanceApiTest extends TestCase
 
     public function test_it_can_record_a_new_attendance()
     {
-        // Yoklama için bir kayıt ve bir ders seçilmeli
         $register = InternRegister::factory()->create();
         $lesson = Lesson::factory()->create();
 
         $payload = [
             'intern_register_id' => $register->id,
             'lesson_id' => $lesson->id,
-            'status' => 1 // Derste var
+            'status' => 1 
         ];
 
         $response = $this->postJson('/api/attendances', $payload);
@@ -51,7 +50,7 @@ class AttendanceApiTest extends TestCase
     {
         $attendance = Attendance::factory()->create(['status' => 1]);
 
-        // Durumu "Yok" (0) olarak güncelleyelim
+        
         $response = $this->putJson("/api/attendances/{$attendance->id}", [
             'status' => 0
         ]);
