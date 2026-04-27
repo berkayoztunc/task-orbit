@@ -140,7 +140,7 @@
                             <p class="text-[10px] text-slate-500 mt-2 font-black uppercase tracking-widest">Sistem Yöneticisi</p>
                         </a>
 
-                        <a href="/company-view/technova" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
+                        <a href="/intern" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
                             <div class="avatar-box h-28 w-28 mb-8 rounded-[2rem] border-2 border-slate-700 bg-blue-600/10 flex items-center justify-center transition-all duration-300">
                                 <span class="text-4xl font-black text-blue-500">TN</span>
                             </div>
@@ -148,7 +148,7 @@
                             <p class="text-[10px] text-blue-500/80 mt-2 font-black uppercase tracking-widest">Intern (Stajyer)</p>
                         </a>
 
-                        <a href="/company-view/global-soft" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
+                        <a href="/mentor" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
                             <div class="avatar-box h-28 w-28 mb-8 rounded-[2rem] border-2 border-slate-700 bg-emerald-600/10 flex items-center justify-center transition-all duration-300">
                                 <span class="text-4xl font-black text-emerald-500">GS</span>
                             </div>
@@ -156,7 +156,7 @@
                             <p class="text-[10px] text-emerald-500/80 mt-2 font-black uppercase tracking-widest">Mentor (Rehber)</p>
                         </a>
 
-                        <a href="/company-view/orbit-lab" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
+                        <a href="/intern" class="profile-card glass p-10 rounded-[2.5rem] flex flex-col items-center text-center group active:scale-95 shadow-2xl">
                             <div class="avatar-box h-28 w-28 mb-8 rounded-[2rem] border-2 border-slate-700 bg-amber-600/10 flex items-center justify-center transition-all duration-300">
                                 <span class="text-4xl font-black text-amber-500">OL</span>
                             </div>
