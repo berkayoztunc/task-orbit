@@ -97,7 +97,7 @@ class LessonController extends Controller
 
             Attendance::firstOrCreate(
                 ['intern_register_id' => $register->id, 'lesson_id' => $lesson->id],
-                ['status' => null]
+                ['status' => false]
             );
 
             TelegramWebhookController::sendMessage(
