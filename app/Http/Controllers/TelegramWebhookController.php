@@ -168,7 +168,7 @@ class TelegramWebhookController extends Controller
 
     public static function sendMessage(string $chatId, string $text): void
     {
-        $token = env('TELEGRAM_BOT_TOKEN');
+        $token = config('services.telegram.token');
         Http::post("https://api.telegram.org/bot{$token}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $text,
