@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Commantable extends Model
 {
     // Bu tabloda created_at ve updated_at sütunları yok
     // Laravel varsayılan olarak timestamp arar, false diyerek kapatıyoruz
     public $timestamps = false;
+    use HasFactory;
 
     // command_id → hangi yoruma ait
     // commantable_id → hangi kaydın id'si (ders, görev, staj)

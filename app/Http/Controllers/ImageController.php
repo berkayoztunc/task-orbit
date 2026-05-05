@@ -23,7 +23,9 @@ class ImageController extends Controller
 
         $image = Image::create([
             'path' => $path,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
+            'imageable_id' => 'required',
+            'imageable_type' => 'required'
         ]);
 
         return response()->json([

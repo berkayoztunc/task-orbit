@@ -9,7 +9,7 @@ class Attendance extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['intern_register_id', 'lesson_id', 'status'];
+    protected $fillable = ['intern_register_id', 'lesson_id', 'status', 'date'];
 
     public function intern_register()
     {

@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Image extends Model
 {
-    protected $fillable = ['path', 'user_id'];
+    use HasFactory;
+    protected $fillable = ['path', 'user_id', 'imageable_id', 
+    'imageable_type'];
 }
