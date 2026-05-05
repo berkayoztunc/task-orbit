@@ -2,33 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\TaskSubmission;
-use App\Models\InternRegister;
-use App\Models\Task;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskSubmissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
-    {
-        // Sadece onaylanmış stajyerleri almak daha güvenli olabilir
-        $registers = InternRegister::all(); 
-        $tasks = Task::all();
+{
+    $tasks = \App\Models\Task::all();
+    $registers = \App\Models\InternRegister::where('message', 'Onaylandı')->get();
 
-        if ($tasks->isEmpty()) {
-            return;
-        }
-
+    foreach ($tasks as $task) {
+        // Her görev için onaylı stajyerlerden rastgele bir teslimat oluşturalım
         foreach ($registers as $register) {
-            TaskSubmission::factory()->create([
+            \App\Models\TaskSubmission::factory()->create([
+                'task_id' => $task->id,
                 'intern_register_id' => $register->id,
-                'task_id' => $tasks->random()->id,
-                'point' => rand(50, 100),
-                'status' => 1
             ]);
         }
     }
+}
 }

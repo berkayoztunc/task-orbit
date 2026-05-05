@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Laravel\Socialite\Facades\Socialite;
+use App\Jobs\SendTelegramMessage;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class GithubController extends Controller
 {
@@ -27,7 +28,7 @@ class GithubController extends Controller
         $user = User::updateOrCreate(
             [
                 'email' => $githubUser->getEmail(),
-                'name' => $githubUser->getName()
+                'name' => $githubUser->getName(),
             ],
             [
                 'github_username' => $githubUser->getNickname(),
@@ -37,7 +38,13 @@ class GithubController extends Controller
             ]
         );
 
+        // Sadece yeni kayıt oluşturulduğunda bildirim gönder
+        if ($user->wasRecentlyCreated) {
+            SendTelegramMessage::dispatch("Yeni kullanıcı kayıt oldu!\nİsim: {$user->name}\nEmail: {$user->email}\nGitHub: {$user->github_username}");
+        }
+
         Auth::login($user);
+
         return redirect('/dashboard');
     }
 }

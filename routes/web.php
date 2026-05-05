@@ -69,3 +69,13 @@ Route::get('/dashboard', function () {
 Route::get('/user-panel', function () {
     return view('user_panel');
 });
+
+// intern
+Route::get('/intern', function () {
+    return view('intern');
+});
+
+//mentor
+Route::get('/mentor', function () {
+    return view('mentor');
+});

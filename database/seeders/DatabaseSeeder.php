@@ -17,13 +17,8 @@ class DatabaseSeeder extends Seeder
             InternshipSeeder::class,
             LessonSeeder::class,
             TaskSeeder::class,
-            InternRegisterSeeder::class,
             AttendanceSeeder::class,
             TaskSubmissionSeeder::class,
-            CommandSeeder::class,
-            CommantableSeeder::class,
-            ImageSeeder::class,
-            MediaSeeder::class,
-        ]);
+    ]);
     }
 }
