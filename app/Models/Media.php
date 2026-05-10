@@ -12,4 +12,9 @@ class Media extends Model
     {
         return $this->belongsTo(Image::class);
     }
+
+    public function media()
+    {
+        return $this->morphTo();
+    }
 }
