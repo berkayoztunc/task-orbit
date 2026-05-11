@@ -4,8 +4,10 @@ namespace App\Jobs;
 
 use App\Models\Lesson;
 use App\Services\GoogleCalendarService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class SyncLessonToCalendar implements ShouldQueue
 {
@@ -28,11 +30,13 @@ class SyncLessonToCalendar implements ShouldQueue
                 $service = new GoogleCalendarService($user);
                 $service->createEvent(
                     title: $this->lesson->title,
-                    startDateTime: $this->lesson->start_date.'T09:00:00',
-                    endDateTime: $this->lesson->end_date.'T17:00:00',
+                    startDateTime: Carbon::parse($this->lesson->start_date)->toRfc3339String(),
+                    endDateTime: Carbon::parse($this->lesson->end_date)->toRfc3339String(),
                     description: $this->lesson->description,
                 );
-            } catch (\Exception) {
+            } catch (\Exception $e) {
+                Log::error('SyncLessonToCalendar failed', ['error' => $e->getMessage()]);
+
                 continue;
             }
         }
