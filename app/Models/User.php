@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
-#[Fillable(['name', 'email', 'password', 'github_username', 'github_token', 'github_avatar', 'telegram_chat_id'])]
+#[Fillable(['name', 'email', 'password', 'github_username', 'github_token', 'github_avatar', 'telegram_chat_id', 'google_token', 'google_refresh_token'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -36,6 +36,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Profile::class);
     }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');

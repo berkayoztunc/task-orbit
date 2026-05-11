@@ -11,7 +11,7 @@ class Task extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['lesson_id', 'title', 'description'];
+    protected $fillable = ['lesson_id', 'title', 'description', 'due_date'];
 
     public function task_submissions()
     {

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Lesson;
+use App\Models\Task;
+use App\Observers\LessonObserver;
+use App\Observers\TaskObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        Lesson::observe(LessonObserver::class);
+        Task::observe(TaskObserver::class);
     }
 
     /**
