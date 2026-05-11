@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\InternRegister;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,12 +36,32 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $activeProfile = null;
+        $activeInternship = null;
+
+        if ($user && $user->current_profile_id) {
+            $user->loadMissing('profiles.company', 'profiles.role');
+            $activeProfile = $user->profiles->firstWhere('id', $user->current_profile_id);
+
+            if ($activeProfile) {
+                $register = InternRegister::with('internship')
+                    ->where('profile_id', $activeProfile->id)
+                    ->where('status', 1)
+                    ->latest()
+                    ->first();
+                $activeInternship = $register?->internship;
+            }
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
+            'activeProfile' => $activeProfile,
+            'activeInternship' => $activeInternship,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

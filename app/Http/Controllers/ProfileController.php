@@ -14,16 +14,16 @@ class ProfileController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Profiles retrieved successfully',
-            'data' => $profiles
+            'data' => $profiles,
         ], 200);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|integer',
-            'company_id' => 'required|integer',
-            'role_id' => 'required|integer',
+            'user_id' => 'required|integer|exists:users,id',
+            'company_id' => 'required|integer|exists:companies,id',
+            'role_id' => 'required|integer|exists:roles,id',
         ]);
 
         $profile = Profile::create($validated);
@@ -31,7 +31,7 @@ class ProfileController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Profile created successfully',
-            'data' => $profile
+            'data' => $profile,
         ], 201);
     }
 
@@ -40,14 +40,14 @@ class ProfileController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Profile retrieved successfully',
-            'data' => $profile
+            'data' => $profile,
         ], 200);
     }
 
     public function update(Request $request, Profile $profile)
     {
         $validated = $request->validate([
-            'role_id' => 'required|integer',
+            'role_id' => 'required|integer|exists:roles,id',
         ]);
 
         $profile->update($validated);
@@ -55,7 +55,7 @@ class ProfileController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Profile updated successfully',
-            'data' => $profile
+            'data' => $profile,
         ], 200);
     }
 
@@ -65,7 +65,7 @@ class ProfileController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Profile deleted successfully'
+            'message' => 'Profile deleted successfully',
         ], 200);
     }
 }

@@ -2,15 +2,22 @@
 
 namespace Tests\Feature;
 
-use App\Models\TaskSubmission;
+use App\Models\InternRegister;
 use App\Models\Task;
-use App\Models\InternRegister; 
+use App\Models\TaskSubmission;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TaskSubmissionApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_it_can_list_task_submissions()
     {
@@ -22,16 +29,15 @@ class TaskSubmissionApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    
     public function test_it_can_submit_a_task()
     {
         $task = Task::factory()->create();
         $internRegister = InternRegister::factory()->create();
 
         $payload = [
-            'task_id'            => $task->id,
+            'task_id' => $task->id,
             'intern_register_id' => $internRegister->id,
-            'submissions'        => 'İşte görev teslim içeriğim.', 
+            'submissions' => 'İşte görev teslim içeriğim.',
         ];
 
         $response = $this->postJson('/api/task-submissions', $payload);
@@ -39,8 +45,8 @@ class TaskSubmissionApiTest extends TestCase
         $response->assertStatus($response->status() === 201 ? 201 : 200);
 
         $this->assertDatabaseHas('task_submissions', [
-            'task_id'            => $task->id,
-            'intern_register_id' => $internRegister->id
+            'task_id' => $task->id,
+            'intern_register_id' => $internRegister->id,
         ]);
     }
 }

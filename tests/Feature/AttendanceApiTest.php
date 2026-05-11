@@ -5,12 +5,19 @@ namespace Tests\Feature;
 use App\Models\Attendance;
 use App\Models\InternRegister;
 use App\Models\Lesson;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AttendanceApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_it_can_list_attendances()
     {
@@ -20,7 +27,7 @@ class AttendanceApiTest extends TestCase
         $response = $this->getJson('/api/attendances');
 
         $response->assertStatus(200)
-                 ->assertJsonPath('status', 'success');
+            ->assertJsonPath('status', 'success');
     }
 
     public function test_it_can_record_a_new_attendance()
@@ -31,18 +38,18 @@ class AttendanceApiTest extends TestCase
         $payload = [
             'intern_register_id' => $register->id,
             'lesson_id' => $lesson->id,
-            'status' => 1 
+            'status' => 1,
         ];
 
         $response = $this->postJson('/api/attendances', $payload);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.status', 1);
+            ->assertJsonPath('data.status', true);
 
         $this->assertDatabaseHas('attendances', [
             'intern_register_id' => $register->id,
             'lesson_id' => $lesson->id,
-            'status' => 1
+            'status' => 1,
         ]);
     }
 
@@ -50,15 +57,14 @@ class AttendanceApiTest extends TestCase
     {
         $attendance = Attendance::factory()->create(['status' => 1]);
 
-        
         $response = $this->putJson("/api/attendances/{$attendance->id}", [
-            'status' => 0
+            'status' => 0,
         ]);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('attendances', [
             'id' => $attendance->id,
-            'status' => 0
+            'status' => 0,
         ]);
     }
 }

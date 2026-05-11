@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use App\Models\Profile;
 use App\Models\Company;
+use App\Models\Profile;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,6 +16,7 @@ class UserProfileApiTest extends TestCase
     public function test_it_can_switch_profile()
     {
         $user = User::factory()->create();
+        $this->actingAs($user);
         $company = Company::create(['title' => 'Test Şirketi']);
         $role = Role::create(['name' => 'Stajyer']);
 
@@ -26,7 +27,7 @@ class UserProfileApiTest extends TestCase
         ]);
 
         $response = $this->patchJson("/api/users/{$user->id}/switch-profile", [
-            'profile_id' => $profile->id
+            'profile_id' => $profile->id,
         ]);
 
         $response->assertStatus(200);

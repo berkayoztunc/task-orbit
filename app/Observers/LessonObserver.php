@@ -11,4 +11,9 @@ class LessonObserver
     {
         SyncLessonToCalendar::dispatch($lesson);
     }
+
+    public function updated(Lesson $lesson): void
+    {
+        SyncLessonToCalendar::dispatch($lesson);
+    }
 }

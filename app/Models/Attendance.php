@@ -8,8 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
+
     protected $fillable = ['intern_register_id', 'lesson_id', 'status', 'date'];
+
+    protected $casts = [
+        'date' => 'date',
+        'status' => 'boolean',
+    ];
 
     public function intern_register()
     {

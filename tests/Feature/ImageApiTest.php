@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -12,21 +13,27 @@ class ImageApiTest extends TestCase
 {
     use RefreshDatabase;
 
-   public function test_it_can_upload_an_image()
-{
-    Storage::fake('public');
-    $task = \App\Models\Task::factory()->create();
-    $file = \Illuminate\Http\UploadedFile::fake()->image('test.jpg');
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
 
-    $payload = [
-        'image' => $file,
-        'user_id' => 1,
-        'imageable_id' => $task->id,
-        'imageable_type' => get_class($task), 
-    ];
+    public function test_it_can_upload_an_image()
+    {
+        Storage::fake('public');
+        $task = Task::factory()->create();
+        $file = UploadedFile::fake()->image('test.jpg');
 
-    $response = $this->postJson('/api/images', $payload);
+        $payload = [
+            'image' => $file,
+            'user_id' => 1,
+            'imageable_id' => $task->id,
+            'imageable_type' => get_class($task),
+        ];
 
-    $response->assertStatus(201);
-}
+        $response = $this->postJson('/api/images', $payload);
+
+        $response->assertStatus(201);
+    }
 }

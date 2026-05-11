@@ -14,7 +14,9 @@ class ImageController extends Controller
     {
         $request->validate([
             'image' => 'required|file|max:10240', // max 10MB
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'imageable_id' => 'required|integer',
+            'imageable_type' => 'required|string',
         ]);
 
         // Dosyayı storage/app/public/uploads klasörüne kaydet
@@ -24,14 +26,14 @@ class ImageController extends Controller
         $image = Image::create([
             'path' => $path,
             'user_id' => $request->user_id,
-            'imageable_id' => 'required',
-            'imageable_type' => 'required'
+            'imageable_id' => $request->imageable_id,
+            'imageable_type' => $request->imageable_type,
         ]);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Image uploaded successfully',
-            'data' => $image
+            'data' => $image,
         ], 201);
     }
 
@@ -46,7 +48,7 @@ class ImageController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Image deleted successfully'
+            'message' => 'Image deleted successfully',
         ]);
     }
 }

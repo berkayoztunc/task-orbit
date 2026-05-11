@@ -11,4 +11,9 @@ class TaskObserver
     {
         SyncTaskToCalendar::dispatch($task);
     }
+
+    public function updated(Task $task): void
+    {
+        SyncTaskToCalendar::dispatch($task);
+    }
 }

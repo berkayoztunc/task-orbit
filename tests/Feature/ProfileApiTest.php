@@ -2,16 +2,22 @@
 
 namespace Tests\Feature;
 
-use App\Models\Profile;
-use App\Models\User;
 use App\Models\Company;
+use App\Models\Profile;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ProfileApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_it_can_list_profiles()
     {
@@ -28,23 +34,20 @@ class ProfileApiTest extends TestCase
         $company = Company::factory()->create();
         $role = Role::factory()->create();
 
-        
         $payload = [
-            'user_id'    => $user->id,
+            'user_id' => $user->id,
             'company_id' => $company->id,
-            'role_id'    => $role->id,
+            'role_id' => $role->id,
         ];
 
         $response = $this->postJson('/api/profiles', $payload);
 
-        
         $response->assertStatus(201);
 
-        
         $this->assertDatabaseHas('profiles', [
-            'user_id'    => $user->id,
+            'user_id' => $user->id,
             'company_id' => $company->id,
-            'role_id'    => $role->id,
+            'role_id' => $role->id,
         ]);
     }
 

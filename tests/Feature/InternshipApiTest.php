@@ -2,14 +2,21 @@
 
 namespace Tests\Feature;
 
-use App\Models\Internship;
 use App\Models\Company;
+use App\Models\Internship;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class InternshipApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
 
     public function test_it_can_list_internships()
     {
@@ -18,7 +25,7 @@ class InternshipApiTest extends TestCase
         $response = $this->getJson('/api/internships');
 
         $response->assertStatus(200)
-                 ->assertJsonPath('status', 'success');
+            ->assertJsonPath('status', 'success');
     }
 
     public function test_it_can_create_an_internship_program()
@@ -27,20 +34,20 @@ class InternshipApiTest extends TestCase
 
         $payload = [
             'company_id' => $company->id,
-            'title'      => 'Yazılım Geliştirme Stajı 2026',
-            'description'=> 'Geniousoft bünyesinde 3 aylık backend staj programı.',
+            'title' => 'Yazılım Geliştirme Stajı 2026',
+            'description' => 'Geniousoft bünyesinde 3 aylık backend staj programı.',
             'start_date' => '2026-06-01',
-            'end_date'   => '2026-09-01',
-            'status'     => '1'
+            'end_date' => '2026-09-01',
+            'status' => '1',
         ];
 
         $response = $this->postJson('/api/internships', $payload);
 
         $response->assertStatus(201)
-                 ->assertJsonPath('data.title', 'Yazılım Geliştirme Stajı 2026');
+            ->assertJsonPath('data.title', 'Yazılım Geliştirme Stajı 2026');
 
         $this->assertDatabaseHas('internships', [
-            'title' => 'Yazılım Geliştirme Stajı 2026'
+            'title' => 'Yazılım Geliştirme Stajı 2026',
         ]);
     }
 
@@ -49,13 +56,13 @@ class InternshipApiTest extends TestCase
         $internship = Internship::factory()->create(['title' => 'Eski Başlık']);
 
         $response = $this->putJson("/api/internships/{$internship->id}", [
-            'title' => 'Güncel Başlık'
+            'title' => 'Güncel Başlık',
         ]);
 
         $response->assertStatus(200);
         $this->assertDatabaseHas('internships', [
-            'id'    => $internship->id,
-            'title' => 'Güncel Başlık'
+            'id' => $internship->id,
+            'title' => 'Güncel Başlık',
         ]);
     }
 }

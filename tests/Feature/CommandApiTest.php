@@ -11,13 +11,19 @@ class CommandApiTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->actingAs(User::factory()->create());
+    }
+
     public function test_it_can_list_commands()
     {
         $user = User::factory()->create();
-        
+
         Command::create([
             'user_id' => $user->id,
-            'message' => 'Test mesajı'
+            'message' => 'Test mesajı',
         ]);
 
         $response = $this->getJson('/api/commands');
@@ -25,11 +31,11 @@ class CommandApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-   public function test_it_can_create_a_command()
+    public function test_it_can_create_a_command()
     {
-        $user = \App\Models\User::factory()->create();
+        $user = User::factory()->create();
 
-        $longMessage = "Sistemi acil olarak en güncel versiyona taşımamız gerekiyor, lütfen tüm veritabanı yedeğini alıp işlemleri hemen başlatın.";
+        $longMessage = 'Sistemi acil olarak en güncel versiyona taşımamız gerekiyor, lütfen tüm veritabanı yedeğini alıp işlemleri hemen başlatın.';
 
         $payload = [
             'user_id' => $user->id,
@@ -42,7 +48,7 @@ class CommandApiTest extends TestCase
 
         $this->assertDatabaseHas('commands', [
             'user_id' => $user->id,
-            'message' => $longMessage
+            'message' => $longMessage,
         ]);
     }
 }

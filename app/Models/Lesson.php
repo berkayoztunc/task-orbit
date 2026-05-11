@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['title', 'internship_id', 'start_date', 'end_date', 'description', 'content', 'profile_id'];
 
-    use HasFactory;
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 
     public $timestamps = false;
 

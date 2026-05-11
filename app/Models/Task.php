@@ -13,6 +13,10 @@ class Task extends Model
 
     protected $fillable = ['lesson_id', 'title', 'description', 'due_date'];
 
+    protected $casts = [
+        'due_date' => 'datetime',
+    ];
+
     public function task_submissions()
     {
         return $this->hasMany(TaskSubmission::class);
