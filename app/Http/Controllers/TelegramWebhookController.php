@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Attendance;
 use App\Models\Lesson;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -115,7 +116,7 @@ class TelegramWebhookController extends Controller
 
             Attendance::firstOrCreate(
                 ['intern_register_id' => $register->id, 'lesson_id' => $lesson->id],
-                ['status' => null]
+                ['status' => null, 'date' => Carbon::parse($lesson->start_date)->toDateString()]
             );
 
             self::sendMessage(
