@@ -4,8 +4,10 @@ namespace App\Jobs;
 
 use App\Models\Task;
 use App\Services\GoogleCalendarService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class SyncTaskToCalendar implements ShouldQueue
 {
@@ -31,11 +33,13 @@ class SyncTaskToCalendar implements ShouldQueue
                 $service = new GoogleCalendarService($user);
                 $service->createEvent(
                     title: 'Ödev: '.$this->task->title,
-                    startDateTime: $dueDate.'T09:00:00',
-                    endDateTime: $dueDate.'T17:00:00',
+                    startDateTime: Carbon::parse($dueDate)->toRfc3339String(),
+                    endDateTime: Carbon::parse($dueDate)->addHour()->toRfc3339String(),
                     description: $this->task->description,
                 );
-            } catch (\Exception) {
+            } catch (\Exception $e) {
+                Log::error('SyncTaskToCalendar failed', ['error' => $e->getMessage()]);
+
                 continue;
             }
         }
