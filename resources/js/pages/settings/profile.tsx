@@ -13,9 +13,11 @@ import { send } from '@/routes/verification';
 export default function Profile({
     mustVerifyEmail,
     status,
+    hasGoogleCalendar,
 }: {
     mustVerifyEmail: boolean;
     status?: string;
+    hasGoogleCalendar: boolean;
 }) {
     const { auth } = usePage().props;
 
@@ -128,6 +130,26 @@ export default function Profile({
                         </>
                     )}
                 </Form>
+            </div>
+
+            <div className="space-y-6">
+                <Heading
+                    variant="small"
+                    title="Google Calendar"
+                    description="Connect your Google account to receive lesson and task notifications in your calendar"
+                />
+                <div className="flex items-center gap-4">
+                    {hasGoogleCalendar ? (
+                        <div className="flex items-center gap-2 text-sm text-green-600">
+                            <span>✓</span>
+                            <span>Google Calendar connected</span>
+                        </div>
+                    ) : (
+                        <Button asChild>
+                            <a href="/auth/google">Connect Google Calendar</a>
+                        </Button>
+                    )}
+                </div>
             </div>
 
             <DeleteUser />

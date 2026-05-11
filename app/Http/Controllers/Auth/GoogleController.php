@@ -26,6 +26,15 @@ class GoogleController extends Controller
             return redirect('/auth/google');
         }
 
+        if (Auth::check()) {
+            Auth::user()->update([
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+            ]);
+
+            return redirect()->away(config('app.url').'/dashboard');
+        }
+
         $user = User::updateOrCreate(
             ['email' => $googleUser->getEmail()],
             [
@@ -38,6 +47,6 @@ class GoogleController extends Controller
 
         Auth::login($user);
 
-        return redirect()->away(config('app.url') . '/dashboard');
+        return redirect()->away(config('app.url').'/dashboard');
     }
 }

@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
-    protected $fillable = ['lesson_id', 'title', 'description'];
+
+    protected $fillable = ['lesson_id', 'title', 'description', 'due_date'];
 
     public function task_submissions()
     {
@@ -20,6 +22,7 @@ class Task extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
