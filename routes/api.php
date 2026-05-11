@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CommandController;
 use App\Http\Controllers\CommantableController;
 use App\Http\Controllers\CompanyController;
@@ -41,6 +42,12 @@ Route::get('companies/{id}/internships', [CompanyController::class, 'internships
 // Intern Registers
 Route::apiResource('intern-registers', InternRegisterController::class);
 Route::get('internships/{internship}/intern-registers', [InternRegisterController::class, 'indexByInternship']);
+
+// Attendances
+Route::get('attendances', [AttendanceController::class, 'index']);
+Route::post('attendances', [AttendanceController::class, 'store']);
+Route::put('attendances/{attendance}', [AttendanceController::class, 'update']);
+Route::get('lessons/{lesson}/attendances', [AttendanceController::class, 'indexByLesson']);
 
 // Lessons
 Route::apiResource('lessons', LessonController::class);
