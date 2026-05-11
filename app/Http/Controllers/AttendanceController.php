@@ -11,11 +11,32 @@ class AttendanceController extends Controller
     public function index()
     {
         $attendances = Attendance::all();
+
         return response()->json([
             'status' => 'success',
             'message' => 'Attendance index',
-            'data' => $attendances
+            'data' => $attendances,
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'intern_register_id' => 'required|exists:intern_registers,id',
+            'lesson_id' => 'required|exists:lessons,id',
+            'status' => 'required',
+            'date' => 'sometimes|date',
+        ]);
+
+        $validated['date'] ??= now()->toDateString();
+
+        $attendance = Attendance::create($validated);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Attendance recorded successfully',
+            'data' => $attendance,
+        ], 201);
     }
 
     public function update(Request $request, Attendance $attendance)
@@ -31,7 +52,7 @@ class AttendanceController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Attendance updated successfully',
-            'data' => $attendance
+            'data' => $attendance,
         ]);
     }
 
@@ -42,7 +63,7 @@ class AttendanceController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Attendance index by lesson',
-            'data' => $attendances
+            'data' => $attendances,
         ]);
     }
 }

@@ -122,6 +122,17 @@
                 </div>
             </header>
 
+            @if(!$hasGoogleCalendar)
+            <div class="flex items-center justify-between border-b border-yellow-500/30 bg-yellow-500/10 px-8 py-3 shrink-0">
+                <p class="text-sm text-yellow-400">
+                    Google Takvim bağlı değil — ders ve ödev bildirimlerini almak için bağlayın.
+                </p>
+                <a href="/auth/google" class="ml-4 shrink-0 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-yellow-600 transition-colors">
+                    Bağla
+                </a>
+            </div>
+            @endif
+
             <!-- CONTENT AREA -->
             <div class="flex-1 overflow-y-auto p-12">
                 <!-- PROFIL SEÇİM ALANI -->

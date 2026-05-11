@@ -1,28 +1,33 @@
 <?php
 
+use App\Http\Controllers\Auth\GithubController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\DashboardController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
-use App\Http\Controllers\Auth\GithubController;
 
 Route::inertia('/', 'welcome', [
     'canRegister' => Features::enabled(Features::registration()),
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
 
-//GitHub
+// GitHub
 Route::get('/auth/github', [GithubController::class, 'redirect'])->name('github.redirect');
 Route::get('/auth/github/callback', [GithubController::class, 'callback'])->name('github.callback');
 
-require __DIR__.'/settings.php';
+// Google
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
 
+require __DIR__.'/settings.php';
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-
 
 // ... diğer rotalar
 
@@ -58,14 +63,15 @@ Route::get('/companies', function () {
     return view('companies');
 })->name('companies.view');
 
-
 // dashboard
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard', function (Request $request) {
+    return view('dashboard', [
+        'hasGoogleCalendar' => (bool) $request->user()->google_token,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//user_panel
+// user_panel
 Route::get('/user-panel', function () {
     return view('user_panel');
 });
@@ -75,7 +81,7 @@ Route::get('/intern', function () {
     return view('intern');
 });
 
-//mentor
+// mentor
 Route::get('/mentor', function () {
     return view('mentor');
 });

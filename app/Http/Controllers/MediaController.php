@@ -1,57 +1,55 @@
 <?php
 
-namespace Tests\Feature;
+namespace App\Http\Controllers;
 
-use App\Models\Image;
-use App\Models\Task;
-use App\Models\User;
 use App\Models\Media;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Http\Request;
 
-class MediaApiTest extends TestCase
+class MediaController extends Controller
 {
-    use RefreshDatabase;
-
-    public function test_it_can_link_an_existing_image_to_a_task()
+    public function store(Request $request)
     {
-        // Mevcut bir user ve image oluşturuyoruz
-        $user = User::factory()->create();
-        $image = Image::factory()->create(['user_id' => $user->id]);
-        $task = Task::factory()->create();
+        $validated = $request->validate([
+            'image_id'   => 'required|exists:images,id',
+            'media_id'   => 'required|integer',
+            'media_type' => 'required|string',
+        ]);
 
-        $payload = [
-            'image_id'   => $image->id,
-            'media_id'   => $task->id,
-            'media_type' => get_class($task),
-        ];
+        $media = Media::create($validated);
 
-        $response = $this->postJson('/api/media', $payload);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Media linked successfully',
+            'data' => $media,
+        ], 201);
+    }
 
-        $response->assertStatus(201);
-        
-        $this->assertDatabaseHas('media', [
-            'image_id' => $image->id,
-            'media_id' => $task->id
+    public function index(Request $request)
+    {
+        $validated = $request->validate([
+            'media_id'   => 'required|integer',
+            'media_type' => 'required|string',
+        ]);
+
+        $media = Media::with('image')
+            ->where('media_id', $validated['media_id'])
+            ->where('media_type', $validated['media_type'])
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Media retrieved successfully',
+            'data' => $media,
         ]);
     }
 
-    public function test_it_can_list_media_with_required_filters()
+    public function destroy(Media $media)
     {
-        $user = User::factory()->create();
-        $image = Image::factory()->create(['user_id' => $user->id]);
-        $task = Task::factory()->create();
+        $media->delete();
 
-        // Bir ilişki kuralım
-        Media::create([
-            'image_id'   => $image->id,
-            'media_id'   => $task->id,
-            'media_type' => get_class($task),
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Media unlinked successfully',
         ]);
-
-        // Controller index metodu 'media_id' ve 'media_type' zorunlu diyor
-        $response = $this->getJson("/api/media?media_id={$task->id}&media_type=" . get_class($task));
-
-        $response->assertStatus(200);
     }
 }
