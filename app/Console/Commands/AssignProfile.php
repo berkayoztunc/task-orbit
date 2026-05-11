@@ -34,8 +34,7 @@ class AssignProfile extends Command
         $this->info("Kullanıcı bulundu: {$user->name}");
 
         // Terminalde seçenek listesi gösterilerek rol seçtirilir
-        $role = $this->choice('Rol seçin', ['Mentor', 'Intern']);
-
+        
         // Seçilen rol ismine göre role_id belirlenir
         // Mentor → 1, Intern → 2 (roles tablosundaki id'ler)
         $roleId = $role === 'Mentor' ? 1 : 2;

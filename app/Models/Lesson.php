@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     protected $fillable = ['title', 'internship_id', 'start_date', 'end_date', 'description', 'content', 'profile_id'];
+
     use HasFactory;
+
     public $timestamps = false;
+
     public function tasks()
     {
         return $this->hasMany(Task::class);
@@ -20,7 +23,6 @@ class Lesson extends Model
         return $this->hasMany(Attendance::class);
     }
 
-
     public function internship()
     {
         return $this->belongsTo(Internship::class);
@@ -29,5 +31,15 @@ class Lesson extends Model
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function commantables()
+    {
+        return $this->morphMany(Commantable::class, 'commantable');
     }
 }

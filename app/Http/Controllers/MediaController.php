@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 
 class MediaController extends Controller
 {
+    // Bir image'ı herhangi bir modele bağlar.
+    // Örn: yüklenen resmi bir Task'a veya Profile'a bağlamak için kullanılır.
+    // media_id → bağlanacak modelin id'si (örn: task'ın id'si)
+    // media_type → hangi model olduğu (örn: "App\Models\Task")
+    // image_id → images tablosundaki kayıt, daha önce ImageController ile yüklendi
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'image_id'   => 'required|exists:images,id',
-            'media_id'   => 'required|integer',
+            'image_id' => 'required|exists:images,id',
+            'media_id' => 'required|integer',
             'media_type' => 'required|string',
         ]);
 
@@ -24,10 +29,12 @@ class MediaController extends Controller
         ], 201);
     }
 
+    // Bir modele bağlı tüm image'ları getirir.
+    // Örn: "Bu task'a bağlı resimler neler?" sorusunun cevabı.
     public function index(Request $request)
     {
         $validated = $request->validate([
-            'media_id'   => 'required|integer',
+            'media_id' => 'required|integer',
             'media_type' => 'required|string',
         ]);
 
@@ -43,6 +50,7 @@ class MediaController extends Controller
         ]);
     }
 
+    // Bağlantıyı koparır — image silinmez, sadece modelle ilişkisi kaldırılır.
     public function destroy(Media $media)
     {
         $media->delete();

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Internship extends Model
 {
     use HasFactory;
+
     protected $fillable = ['company_id', 'title', 'status', 'description'];
 
     public function lessons()
@@ -23,5 +24,15 @@ class Internship extends Model
     public function internRegisters()
     {
         return $this->hasMany(InternRegister::class);
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function commantables()
+    {
+        return $this->morphMany(Commantable::class, 'commantable');
     }
 }
